@@ -1,0 +1,27 @@
+﻿@model IEnumerable<EmployeeSystem.Web.Models.Employee>
+
+<h1>Employee List</h1>
+<a asp-controller="Employees" asp-action="Create">Create New</a>
+ 
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        @foreach (var item in Model)
+        {
+            <tr>
+                    <td>@item.Name</td> 
+                <td>
+                        <a asp-controller="Employees" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

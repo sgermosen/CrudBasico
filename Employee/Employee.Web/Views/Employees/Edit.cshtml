@@ -1,0 +1,27 @@
+﻿@model EmployeeSystem.Web.Models.Employee
+
+<h1>Edit Employee</h1>
+<form asp-action="Edit">
+   
+    <input type="hidden" asp-for="Id" />
+    <div class="row col-md-12">
+
+        <div class="form-group col-md-4">
+            <label asp-for="Name"  ></label>
+            <input  asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="Department" ></label>
+            <input  asp-for="Department" class="form-control" />
+            <span asp-validation-for="Department" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="Position"  ></label>
+            <input asp-for="Position" class="form-control" />
+            <span asp-validation-for="Position" class="text-danger"></span>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

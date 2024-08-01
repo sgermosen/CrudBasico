@@ -1,0 +1,20 @@
+﻿@model EmployeeSystem.Web.Models.Employee
+@{
+    ViewData["Title"] = "Create Employee";
+}
+
+<h1>Create Employee</h1>
+<form asp-action="Create" >
+    <div class="row col-md-12">
+         
+        <div class="form-group col-md-4">
+            <label asp-for="Name" id="name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+       
+    </div>
+   
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
