@@ -1,5 +1,5 @@
-﻿using EmployeeSystem.Web;
-using EmployeeSystem.Web.Models;
+﻿using EmployeeSystem.Domain.Entities;
+using EmployeeSystem.Infraestructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace EmployeeSystem.Web.Models
+namespace EmployeeSystem.Domain.Entities
 {
     public class Assignment
     {

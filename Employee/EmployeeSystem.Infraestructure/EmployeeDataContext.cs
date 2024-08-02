@@ -1,13 +1,13 @@
-﻿using EmployeeSystem.Web.Models;
+﻿using EmployeeSystem.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace EmployeeSystem.Web
+namespace EmployeeSystem.Infraestructure
 {
-    public class EmployeeDataContext: DbContext
+    public class EmployeeDataContext : DbContext
     {
-        public EmployeeDataContext(DbContextOptions<EmployeeDataContext> options): base (options)   
+        public EmployeeDataContext(DbContextOptions<EmployeeDataContext> options) : base(options)
         {
-            
+
         }
 
         public DbSet<Employee> Employees { get; set; }

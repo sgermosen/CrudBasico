@@ -19,4 +19,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EmployeeSystem.Domain\EmployeeSystem.Domain.csproj" />
+    <ProjectReference Include="..\EmployeeSystem.Infraestructure\EmployeeSystem.Infraestructure.csproj" />
+  </ItemGroup>
+
 </Project>
