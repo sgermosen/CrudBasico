@@ -1,7 +1,7 @@
-using Employeees.Domain.Entities;
-using Employeees.Web.Persistence;
+using EmployeeSystem.Api.Dtos.Employees;
+using EmployeeSystem.Domain.Entities;
+using EmployeeSystem.Infraestructure;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeSystem.Api.Controllers
 {
@@ -11,7 +11,7 @@ namespace EmployeeSystem.Api.Controllers
     {
         private readonly EmployeeDataContext _context;
 
-        public EmployeesController(ApplicationDbContext context)
+        public EmployeesController(EmployeeDataContext context)
         {
             _context = context;
         }
@@ -35,27 +35,22 @@ namespace EmployeeSystem.Api.Controllers
         }
 
         [HttpPost(Name = "CreateEmployee")]
-        public async Task<IActionResult> Create([FromBody] Employee model)
+        public async Task<IActionResult> Create([FromBody] CreateEmployee model)
         {
             if (model == null)
             {
                 return BadRequest("Employee data is null");
             }
 
-            bool emailExists = await _context.Employees
-                .AnyAsync(c => c.Email == model.Email);
-            if (emailExists)
-            {
-                return BadRequest("This email is already in use");
-            }
 
             if (ModelState.IsValid)
             {
                 var employeeDb = new Employee
                 {
-                    Email = model.Email,
-                    PhoneNumber = model.PhoneNumber,
-                    Name = model.Name
+                    Department = model.Department,
+                    Position = model.Position,
+                    Name = model.Name,
+                    SexId = 1
                 };
 
                 _context.Employees.Add(employeeDb);
@@ -80,17 +75,9 @@ namespace EmployeeSystem.Api.Controllers
                 return NotFound("Employee not found");
             }
 
-            if (await _context.Employees.AnyAsync(c => c.Email == model.Email && c.Id != id))
-            {
-                return BadRequest("This email is already in use by another employee");
-            }
 
             if (ModelState.IsValid)
             {
-                employeeFromDb.Email = model.Email;
-                employeeFromDb.PhoneNumber = model.PhoneNumber;
-                employeeFromDb.Name = model.Name;
-
                 _context.Employees.Update(employeeFromDb);
                 await _context.SaveChangesAsync();
                 return Ok(employeeFromDb);

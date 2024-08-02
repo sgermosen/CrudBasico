@@ -1,5 +1,6 @@
 ﻿using EmployeeSystem.Domain.Entities;
 using EmployeeSystem.Infraestructure;
+using EmployeeSystem.Web.ViewModels.Employees;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,11 +28,19 @@ namespace Contactes.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Employee model)
+        public async Task<IActionResult> Create(CreateEmployee model)
         {
             if (ModelState.IsValid)
             {
-                _context.Employees.Add(model);
+                var employeeDb = new Employee
+                {
+                    Department = model.Department,
+                    Position = model.Position,
+                    Name = model.Name,
+                    SexId = 1
+                };
+
+                _context.Employees.Add(employeeDb);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -45,12 +54,17 @@ namespace Contactes.Web.Controllers
                 return NotFound();
             }
 
-            var model = await _context.Employees.FindAsync(id);
-            if (model == null)
+            var dbItem = await _context.Employees.FindAsync(id);
+            if (dbItem == null)
             {
                 return NotFound();
             }
-            return View(model);
+            var vm = new EditEmployee();
+            vm.Position = dbItem.Position;
+            vm.Name = dbItem.Name;
+            vm.Department = dbItem.Department;
+
+            return View(vm);
         }
 
         [HttpPost]

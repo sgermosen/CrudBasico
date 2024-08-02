@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeSystem.Api", "Emplo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeSystem.Web", "Employee.Web\EmployeeSystem.Web.csproj", "{2880DA9B-A24F-43B6-9383-7FCC1A4D8227}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeSystem.Infraestructure", "EmployeeSystem.Infraestructure\EmployeeSystem.Infraestructure.csproj", "{76356AF7-4640-413F-9CE3-8400081685AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeSystem.Domain", "EmployeeSystem.Domain\EmployeeSystem.Domain.csproj", "{B12BEF2E-4526-41C6-8461-C1AD2F63DA60}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{2880DA9B-A24F-43B6-9383-7FCC1A4D8227}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2880DA9B-A24F-43B6-9383-7FCC1A4D8227}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2880DA9B-A24F-43B6-9383-7FCC1A4D8227}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76356AF7-4640-413F-9CE3-8400081685AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76356AF7-4640-413F-9CE3-8400081685AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76356AF7-4640-413F-9CE3-8400081685AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76356AF7-4640-413F-9CE3-8400081685AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B12BEF2E-4526-41C6-8461-C1AD2F63DA60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B12BEF2E-4526-41C6-8461-C1AD2F63DA60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B12BEF2E-4526-41C6-8461-C1AD2F63DA60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B12BEF2E-4526-41C6-8461-C1AD2F63DA60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
