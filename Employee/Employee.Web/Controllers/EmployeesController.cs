@@ -1,23 +1,21 @@
-﻿using EmployeeSystem.Domain.Entities;
-using EmployeeSystem.Infraestructure;
-using EmployeeSystem.Web.ViewModels.Employees;
+﻿using EmployeeSystem.Application.Dtos.Employees;
+using EmployeeSystem.Application.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Contactes.Web.Controllers
 {
     public class EmployeesController : Controller
     {
-        private readonly EmployeeDataContext _context;
+        private readonly EmployeeService _service;
 
-        public EmployeesController(EmployeeDataContext context)
+        public EmployeesController(EmployeeService service)
         {
-            _context = context;
+            _service = service;
         }
 
         public async Task<IActionResult> Index()//Accion
         {
-            return View(await _context.Employees.ToListAsync());
+            return View(await _service.GetEmployees());
         }
 
         //  [HttpGet]
@@ -32,29 +30,15 @@ namespace Contactes.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var employeeDb = new Employee
-                {
-                    Department = model.Department,
-                    Position = model.Position,
-                    Name = model.Name,
-                    SexId = 1
-                };
-
-                _context.Employees.Add(employeeDb);
-                await _context.SaveChangesAsync();
+                await _service.CreateEmployee(model);
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
 
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var dbItem = await _context.Employees.FindAsync(id);
+            var dbItem = await _service.GetEmployee(id);
             if (dbItem == null)
             {
                 return NotFound();
@@ -69,7 +53,7 @@ namespace Contactes.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, Employee model)
+        public async Task<IActionResult> Edit(long id, EditEmployee model)
         {
             if (id != model.Id)
             {
@@ -78,18 +62,7 @@ namespace Contactes.Web.Controllers
 
             if (ModelState.IsValid)
             {
-
-                //    var contactFromDb = await _context.Contacts
-                //.FirstOrDefaultAsync(c => c.Email == model.Email);
-
-
-                //    contactFromDb.Email = model.Email;
-                //    contactFromDb.PhoneNumber = model.PhoneNumber;
-                //    contactFromDb.Name = model.Name;
-
-
-                _context.Employees.Update(model);
-                await _context.SaveChangesAsync();
+                await _service.EditEmployee(model);
 
                 return RedirectToAction(nameof(Index));
             }

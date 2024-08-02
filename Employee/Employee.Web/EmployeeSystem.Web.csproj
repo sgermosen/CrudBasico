@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ViewModels\**" />
+    <Content Remove="ViewModels\**" />
+    <EmbeddedResource Remove="ViewModels\**" />
+    <None Remove="ViewModels\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Views\Shared\Error.cshtml" />
   </ItemGroup>
 
@@ -20,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EmployeeSystem.Application\EmployeeSystem.Application.csproj" />
     <ProjectReference Include="..\EmployeeSystem.Domain\EmployeeSystem.Domain.csproj" />
     <ProjectReference Include="..\EmployeeSystem.Infraestructure\EmployeeSystem.Infraestructure.csproj" />
   </ItemGroup>

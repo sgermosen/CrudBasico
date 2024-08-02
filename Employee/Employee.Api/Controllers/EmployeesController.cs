@@ -1,6 +1,6 @@
-using EmployeeSystem.Api.Dtos.Employees;
+using EmployeeSystem.Application.Dtos.Employees;
+using EmployeeSystem.Application.Services;
 using EmployeeSystem.Domain.Entities;
-using EmployeeSystem.Infraestructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeSystem.Api.Controllers
@@ -9,24 +9,24 @@ namespace EmployeeSystem.Api.Controllers
     [Route("[controller]")]
     public class EmployeesController : ControllerBase
     {
-        private readonly EmployeeDataContext _context;
+        private readonly EmployeeService _service;
 
-        public EmployeesController(EmployeeDataContext context)
+        public EmployeesController(EmployeeService service)
         {
-            _context = context;
+            _service = service;
         }
 
         [HttpGet(Name = "GetEmployees")]
-        public IEnumerable<Employee> Get()
+        public async Task<IEnumerable<Employee>> Get()
         {
-            var employeesFromDb = _context.Employees.ToList();
+            var employeesFromDb = await _service.GetEmployees();
             return employeesFromDb;
         }
 
         [HttpGet("{id}", Name = "GetEmployee")]
-        public ActionResult<Employee> Get(int id)
+        public async Task<ActionResult<Employee>> Get(int id)
         {
-            var employeeFromDb = _context.Employees.FirstOrDefault(p => p.Id == id);
+            var employeeFromDb = await _service.GetEmployee(id);
             if (employeeFromDb == null)
             {
                 return NotFound("Employee not found");
@@ -45,59 +45,47 @@ namespace EmployeeSystem.Api.Controllers
 
             if (ModelState.IsValid)
             {
-                var employeeDb = new Employee
-                {
-                    Department = model.Department,
-                    Position = model.Position,
-                    Name = model.Name,
-                    SexId = 1
-                };
-
-                _context.Employees.Add(employeeDb);
-                await _context.SaveChangesAsync();
-                return CreatedAtRoute("GetEmployee", new { id = employeeDb.Id }, employeeDb);
+                var result = await _service.CreateEmployee(model);
+                return CreatedAtRoute("GetEmployee", new { id = result.Id }, result);
             }
 
             return BadRequest(ModelState);
         }
 
         [HttpPut("{id}", Name = "UpdateEmployee")]
-        public async Task<IActionResult> Update(int id, [FromBody] Employee model)
+        public async Task<IActionResult> Update(int id, [FromBody] EditEmployee model)
         {
             if (model == null || id != model.Id)
             {
                 return BadRequest("Employee data is invalid");
             }
-
-            var employeeFromDb = await _context.Employees.FindAsync(id);
-            if (employeeFromDb == null)
-            {
-                return NotFound("Employee not found");
-            }
-
-
             if (ModelState.IsValid)
             {
-                _context.Employees.Update(employeeFromDb);
-                await _context.SaveChangesAsync();
-                return Ok(employeeFromDb);
+
+                var result = await _service.EditEmployee(model);
+                if (result == null)
+                {
+                    return NotFound("Employee not found");
+                }
+                 
+                return Ok(result);
             }
 
             return BadRequest(ModelState);
         }
 
-        [HttpDelete("{id}", Name = "DeleteEmployee")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var employeeFromDb = await _context.Employees.FindAsync(id);
-            if (employeeFromDb == null)
-            {
-                return NotFound("Employee not found");
-            }
+        //[HttpDelete("{id}", Name = "DeleteEmployee")]
+        //public async Task<IActionResult> Delete(int id)
+        //{
+        //    var employeeFromDb = await _context.Employees.FindAsync(id);
+        //    if (employeeFromDb == null)
+        //    {
+        //        return NotFound("Employee not found");
+        //    }
 
-            _context.Employees.Remove(employeeFromDb);
-            await _context.SaveChangesAsync();
-            return Ok("Employee Deleted");
-        }
+        //    _context.Employees.Remove(employeeFromDb);
+        //    await _context.SaveChangesAsync();
+        //    return Ok("Employee Deleted");
+        //}
     }
 }

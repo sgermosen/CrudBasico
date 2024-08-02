@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EmployeeSystem.Api.Dtos.Employees
+namespace EmployeeSystem.Application.Dtos.Employees
 {
     public class CreateEmployee
     {
